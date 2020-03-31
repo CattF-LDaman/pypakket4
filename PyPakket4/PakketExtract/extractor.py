@@ -182,6 +182,3 @@ class Extractor:
                     sys.exit(1)
 
         self.logger.log("All files extracted!")
-
-***REMOVED***
-***REMOVED***

@@ -242,6 +242,3 @@ class Creator:
             f.flush()
 
         self.logger.log("Package file created!")
-
-c = Creator(r"C:\Users\Luwe Daman\Desktop\mcserver\world")
-c.create_package_file("C:/Users/Luwe Daman/Desktop/mcserver/backups/30032020.pyp4","MCServer",{}, allow_overwrite=True, file_write_chunk_size=1024*4)
