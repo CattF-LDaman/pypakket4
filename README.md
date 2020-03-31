@@ -23,7 +23,7 @@ I created it with certain things in mind including:
  
  Compression (DEFLATE, INFLATE) using zlib
  
- SHA-256 hash of file is stored in file entry in package header, when file is extracted it's hash can be compared to the one stored in package header
+ blake2b hash of file is stored in file entry in package header, when file is extracted it's hash can be compared to the one stored in package header
  
  # Requirements
  see requirements.txt
