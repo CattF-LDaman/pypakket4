@@ -10,14 +10,14 @@ import msgpack
 from array import array
 from tempfile import gettempdir
 
-from PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
-from PakketShared.crypto_aes import encrypt,gen_iv
-from PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
-from PakketShared.compression import deflate
+from PyPakket4.PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
+from PyPakket4.PakketShared.crypto_aes import encrypt,gen_iv
+from PyPakket4.PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
+from PyPakket4.PakketShared.compression import deflate
 
 class Creator:
 
-    def __init__(self,target_dir,package_name=None,print_logs=True,print_debug_logs=False,stealth=False):
+    def __init__(self,target_dir,package_name=None,print_logs=True,print_debug_logs=False,stealth=False,logger_cleanup=True):
 
         """
 
@@ -31,7 +31,7 @@ class Creator:
 
         self._log_path = os.path.join(gettempdir(),"Creator{}_{}.log".format(int(time.time()),random.randint(0,999)))
 
-        self.logger = Logger(self._log_path,print_logs=print_logs,print_debug=print_debug_logs,stealth=stealth)
+        self.logger = Logger(self._log_path,print_logs=print_logs,print_debug=print_debug_logs,stealth=stealth,cleanup=logger_cleanup)
 
         if not stealth:
             self.logger.log("Logger started with output file ' {} '".format(self._log_path))
@@ -63,18 +63,6 @@ class Creator:
             d_i_counter += 1
 
         self.logger.log("Creator with directory ' {} ' initialised!".format(os.path.basename(target_dir)))
-
-    #def create_header(self):
-
-        #h = b''
-
-        #mdata = msgpack.dumps(metadata)
-        #h += len(mdata).to_bytes(4,'little') # max mdata len == 2**32-1
-        #h += mdata
-
-        #des = b""
-        #for dir in self.target_dir_contents['dirs']:
-
 
     def create_package_file(self,out_path,encryption_key=None,metadata={},allow_overwrite=False, file_write_chunk_size = 2048):
 
