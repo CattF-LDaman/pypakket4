@@ -10,7 +10,7 @@ I created it with certain things in mind including:
  - Compression
  - Checksum of some kind
  - AES Encryption
- - Decent package size to original size ratio
+ - Decent package size to original size ratio (using TestDir with test.py, PACKAGE: 3KB, NORMAL: 29KB)
  
  Preferred file extension is .pyp4
  
@@ -26,7 +26,7 @@ I created it with certain things in mind including:
  SHA-256 hash of file is stored in file entry in package header, when file is extracted it's hash can be compared to the one stored in package header
  
  # Requirements
- See requirements.txt
+ see requirements.txt
  
  # TO-DO
  - Interface for easier and more rugged extraction and creation
@@ -34,4 +34,6 @@ I created it with certain things in mind including:
  - Better TO-DO list (:
  
  # License
- See LICENSE
+ MIT License
+ 
+ see LICENSE
