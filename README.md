@@ -28,6 +28,20 @@ I created it with certain things in mind including:
  # Requirements
  see requirements.txt
  
+ # Examples
+ 
+DIR is the directory you want to archive eg. CoolDocuments
+
+OUTF is the name/path of the output package file eg. CoolDocuments.pyp4 (name and extension don't really matter)
+
+
+`from PyPakket4 import PakketCreate
+
+p = PakketCreate.creator.Creator("DIR")
+p.create_package_file("OUTF",encryption_key="TestKey",allow_overwrite=True)
+p.close()`
+
+ 
  # TO-DO
  - Interface for easier and more rugged extraction and creation
  - GUI?
