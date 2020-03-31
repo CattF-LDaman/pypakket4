@@ -1,6 +1,8 @@
 import colorama
 import datetime
 
+from os import remove
+
 import json
 
 colorama.init(autoreset=True)
@@ -15,12 +17,16 @@ class Logger:
 
     types = {0:('INFO',colorama.Fore.WHITE),1:('WARNING',colorama.Fore.LIGHTMAGENTA_EX),2:('ERROR',colorama.Fore.LIGHTRED_EX),3:('UNKNOWN',colorama.Fore.LIGHTBLUE_EX),-1:("DEBUG",colorama.Fore.LIGHTGREEN_EX)}
 
-    def __init__(self,filepath,print_logs=True,print_debug=False,stealth=False):
+    def __init__(self,filepath,print_logs=True,print_debug=False,stealth=False,cleanup=True):
+
+        self._cleanup = cleanup
 
         self._stealth = stealth
 
         if not stealth:
             self.log_file = open(filepath,'a')
+
+            self.filepath = filepath
 
             self.print_logs = print_logs
             self.print_debug = print_debug
@@ -49,3 +55,7 @@ class Logger:
 
         if not self.log_file.closed:
             self.log_file.close()
+
+        if self._cleanup:
+
+            remove(self.filepath)
