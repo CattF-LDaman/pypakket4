@@ -10,6 +10,7 @@ I created it with certain things in mind including:
  - Compression
  - Checksum of some kind
  - AES Encryption
+ - Decent package size to original size ratio
  
  Preferred file extension is .pyp4
  
