@@ -169,11 +169,11 @@ class Extractor:
 
             for file in self.target_package_contents['files']:
 
-                fpath = os.path.join(self.target_package_contents['dirs'][file['dir_id']],file['name'])
+                fpath = os.path.join(output_dir,os.path.join(self.target_package_contents['dirs'][file['dir_id']],file['name']))
 
                 if (not os.path.exists(fpath) and not os.path.isfile(fpath)) or allow_overwrites:
 
-                    with open(os.path.join(output_dir,os.path.join(self.target_package_contents['dirs'][file['dir_id']],file['name'])),'wb') as f:
+                    with open(fpath,'wb') as f:
 
                         if not skip_hash_check:
                             h = hashlib.blake2b(digest_size=32)
@@ -196,6 +196,9 @@ class Extractor:
                                 raise HashMismatchError("File ' {} ' failed hash check, package file might have been tampered with, is corrupted or extraction failed".format(file['name']))
 
                         self.logger.log("File ' {} ' extracted.".format(file['name']))
+
+                    os.utime(fpath, (file['last_mod_time'],file['last_mod_time']))
+                    self.logger.log("Changed last modification time of file to match file['last_mod_time']",DEBUG)
 
                 elif not allow_overwrites:
                     self.logger.log("Extractor tried to extract file ' {} ' but file already exists and allow_overwrites is set to false!".format(file),ERROR)
