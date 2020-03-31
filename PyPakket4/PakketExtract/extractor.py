@@ -102,7 +102,7 @@ class Extractor:
 
             self.creation_time = int.from_bytes(decrypt(f.read(8),crypto_key,self.IV),'little')
             self.creation_time_as_str = from_POSIX_timestamp(self.creation_time)
-            self.logger.log('Creation time: {}'.find(self.creation_time_as_str))
+            self.logger.log('Creation time: {}'.format(self.creation_time_as_str))
 
             amount_dirs = int.from_bytes(decrypt(f.read(6),crypto_key,self.IV),'little')
 
