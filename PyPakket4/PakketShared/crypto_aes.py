@@ -9,6 +9,8 @@ def gen_iv():
 
 def key_from_string(string,length=None):
     if length:
+        if length == 16:
+            return hashlib.md5(str(string).encode('utf-8')).digest()
         if length <= 128:
             return hashlib.sha512(bytes(str(string)*length*21,'utf-8')).digest()[:length]
         else:
