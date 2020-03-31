@@ -8,5 +8,5 @@ def get_POSIX_timestamp():
 
 def from_POSIX_timestamp(ts):
 
-    return datetime.datetime.fromtimestamp(ts)
+    return datetime.datetime.fromtimestamp(ts).strftime("%A %d/%m/%Y (DD/MM/YYYY) at %T")
 
