@@ -1,7 +1,6 @@
 
 import zlib
 
-
 def deflate(data, compresslevel=9):
     compress = zlib.compressobj(
             compresslevel,        # level: 0-9

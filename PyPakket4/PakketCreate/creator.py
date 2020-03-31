@@ -11,6 +11,7 @@ from PyPakket4.PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
 from PyPakket4.PakketShared.crypto_aes import encrypt,gen_iv
 from PyPakket4.PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
 from PyPakket4.PakketShared.compression import deflate
+from PyPakket4.PakketCreate.exceptions import *
 
 class Creator:
 
@@ -18,11 +19,13 @@ class Creator:
 
         """
 
-        :param target_dir: Directory to be archived
+        :param target_dir: Directory to be archived (path)
         :param print_logs: Whether to print logs
         :param print_debug_logs: Whether to print debug logs
         :param stealth: If true, logs don't get printed or saved to a file, no log file is created.
         """
+
+        self.closed = False
 
         self._stealth = stealth
 
@@ -61,17 +64,26 @@ class Creator:
 
         self.logger.log("Creator with directory ' {} ' initialised!".format(os.path.basename(target_dir)))
 
-    def create_package_file(self,out_path,encryption_key=None,metadata={},allow_overwrite=False, file_write_chunk_size = 2048):
+    def create_package_file(self,out_path,encryption_key=None,metadata=None,allow_overwrite=False, file_write_chunk_size = 2048):
 
         """
+
+        Extract files from loaded package file to a directory
 
         :param out_path: Path to output file
+        :type out_path: any path-like object/string
         :param encryption_key: Encryption key, blank for no encryption
+        :type encryption_key: string
         :param metadata: Optional extra metadata
+        :type metadata: Any object serializable by msgpack, usually dict
         :param allow_overwrite: Allow overwrite if output file already exists
         :param file_write_chunk_size: Chunk size per write
-        :return:
+        :return: None
         """
+
+        if self.closed:
+
+            raise CreatorClosedError("Can't extract with closed Creator object")
 
         if os.path.exists(out_path) and not allow_overwrite:
 
@@ -227,3 +239,10 @@ class Creator:
             f.flush()
 
         self.logger.log("Package file created!")
+
+    def close(self):
+
+        self.closed = True
+
+        self.logger.log("Closing.")
+        self.logger.close()

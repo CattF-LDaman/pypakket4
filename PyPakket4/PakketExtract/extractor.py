@@ -19,14 +19,17 @@ class Extractor:
 
         """
 
-        :param target_package: Package to be extracted
+        :param target_package: Package (path) to be extracted
         :param crypto_key: Key for decryption, blank if no encryption
+        :type crypto_key: String
         :param print_logs: Whether to print logs
         :param print_debug_logs: Whether to print debug logs
         :param stealth: If true, logs don't get printed or saved to a file, no log file is created.
         :param logger_cleanup: Whether to delete logfile when logger.close method is called
         :param skip_version_check: Skip checking 16-bit version end included in file header, if set to False, Extractor raises PyPakket4.PakketExtract.exceptions.VersionMismatchError
         """
+
+        self.closed = False
 
         self._stealth = stealth
 
@@ -63,7 +66,7 @@ class Extractor:
                 self.logger.log("Mismatching versions: PACKAGE: {}, PYPAKKET4: {}\n\tCannot proceed, to override version check set ' skip_version_check ' to True ".format(self.version,VERSION))
                 raise VersionMismatchError("16-bit version int found in file header doesn't match current PyPakket4 version")
 
-            else:
+            elif not skip_version_check:
 
                 self.logger.log("Mismatching versions: PACKAGE: {}, PYPAKKET4: {}\n\tStill trying to extract because ' skip_version_check ' is set to True!".format(self.version,VERSION))
 
@@ -145,9 +148,11 @@ class Extractor:
         :param allow_overwrites: Whether to overwrite if file that needs to be extracted already exists in ' output_dir ', if set to False, PyPakket4.PakketExtract.exceptions.ExtractOverwriteError is raised
         :param skip_hash_check: Whether to skip checking hash found in file header and hash of extracted file
         :param hash_match_required: Whether to raise error if hash check fails (see skip_hash_check)
-        :return:
+        :return: None
         """
 
+        if self.closed:
+            raise ExtractorClosedError("Can't extract with closed Extractor object")
 
         if not os.path.isdir(output_dir):
 
@@ -197,3 +202,10 @@ class Extractor:
                     raise ExtractOverwriteError("Extractor tried to extract file ' {} ' but file already exists and allow_overwrites is set to false!".format(file))
 
         self.logger.log("All files extracted!")
+
+    def close(self):
+
+        self.closed = True
+
+        self.logger.log("Closing.")
+        self.logger.close()

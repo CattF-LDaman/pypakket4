@@ -1,0 +1,3 @@
+
+class CreatorClosedError(Exception):
+    pass

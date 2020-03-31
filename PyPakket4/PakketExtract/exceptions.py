@@ -7,3 +7,6 @@ class ExtractOverwriteError(Exception):
 
 class HashMismatchError(Exception):
     pass
+
+class ExtractorClosedError(Exception):
+    pass
