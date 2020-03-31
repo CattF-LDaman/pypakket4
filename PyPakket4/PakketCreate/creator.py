@@ -11,6 +11,7 @@ from PyPakket4.PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
 from PyPakket4.PakketShared.crypto_aes import encrypt,gen_iv
 from PyPakket4.PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
 from PyPakket4.PakketShared.compression import deflate
+from PyPakket4.PakketShared.pp4time import get_POSIX_timestamp
 from PyPakket4.PakketCreate.exceptions import *
 
 class Creator:
@@ -64,7 +65,7 @@ class Creator:
 
         self.logger.log("Creator with directory ' {} ' initialised!".format(os.path.basename(target_dir)))
 
-    def create_package_file(self,out_path,encryption_key=None,metadata=None,allow_overwrite=False, file_write_chunk_size = 2048):
+    def create_package_file(self,out_path,encryption_key=None,metadata=None,allow_overwrite=False, file_write_chunk_size = 2048, overwrite_timestamp=None):
 
         """
 
@@ -78,6 +79,7 @@ class Creator:
         :type metadata: Any object serializable by msgpack, usually dict
         :param allow_overwrite: Allow overwrite if output file already exists
         :param file_write_chunk_size: Chunk size per write
+        :param overwrite_timestamp: When given, sets creation time of package to given int (number of seconds since unix epoch), does NOT overwrite file modification times
         :return: None
         """
 
@@ -178,6 +180,10 @@ class Creator:
             f.write(encrypt(mdata,encryption_key,self.IV))
 
             self.logger.log("Metadata has been written to package file")
+
+            ts = get_POSIX_timestamp() if not overwrite_timestamp else overwrite_timestamp
+
+            f.write(encrypt(int(ts).to_bytes(8,'little'),encryption_key,self.IV))
 
             f.write(encrypt(len(self.target_dir_contents['dirs']).to_bytes(6, 'little'),encryption_key,self.IV))
 

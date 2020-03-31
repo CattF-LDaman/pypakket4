@@ -8,5 +8,5 @@ p.close()
 print("--- TEST BORDER ---")
 
 px = PakketExtract.extractor.Extractor("TestDir.pyp4",crypto_key="TestKey")
-px.extract_package("TestDir_extract",allow_overwrites=True)
+px.extract_package("TestDir_extract",allow_overwrites=True,add_metadata_file=True)
 px.close()
