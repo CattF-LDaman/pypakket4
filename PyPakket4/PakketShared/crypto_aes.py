@@ -10,9 +10,9 @@ def gen_iv():
 def key_from_string(string,length=None):
     if length:
         if length == 16:
-            return hashlib.md5(str(string).encode('utf-8')).digest()
+            return hashlib.blake2b(str(string).encode('utf-8')+b"saltyPP4",digest_size=16).digest()
         if length <= 128:
-            return hashlib.sha512(bytes(str(string)*length*21,'utf-8')).digest()[:length]
+            return hashlib.sha512(bytes(str(string)*length*21,'utf-8')+b"saltyPP4").digest()[:length]
         else:
             raise Exception('Length should be less than or equal to 128!')
     else:
