@@ -34,13 +34,24 @@ DIR is the directory you want to archive eg. CoolDocuments
 
 OUTF is the name/path of the output package file eg. CoolDocuments.pyp4 (name and extension don't really matter)
 
-
+KEY is a string used to encrypt file contents and some information stored in header
 ```python
 from PyPakket4 import PakketCreate
 
 p = PakketCreate.creator.Creator("DIR")
-p.create_package_file("OUTF",encryption_key="TestKey",allow_overwrite=True)
+p.create_package_file("OUTF",encryption_key="KEY",allow_overwrite=True)
 p.close()
+```
+----
+Extraction using some of the example values from before
+
+NEWDIR is the directory where extracted files will be placed
+```python
+from PyPakket4 import PakketExtract
+
+px = PakketExtract.extractor.Extractor("CoolDocuments.pyp4",crypto_key="KEY")
+px.extract_package("NEWDIR",allow_overwrites=True)
+px.close()
 ```
 
  
