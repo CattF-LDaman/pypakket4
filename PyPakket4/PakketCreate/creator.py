@@ -1,13 +1,10 @@
 
 import os
-import sys
 import random
-import zlib
 import time
 import hashlib
 
 import msgpack
-from array import array
 from tempfile import gettempdir
 
 from PyPakket4.PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
