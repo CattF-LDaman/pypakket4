@@ -7,12 +7,12 @@ import hashlib
 import msgpack
 from tempfile import gettempdir
 
-from PyPakket4.PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
-from PyPakket4.PakketShared.crypto_aes import encrypt,gen_iv
-from PyPakket4.PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
-from PyPakket4.PakketShared.compression import deflate
-from PyPakket4.PakketShared.pp4time import get_POSIX_timestamp
-from PyPakket4.PakketCreate.exceptions import *
+from ..PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
+from ..PakketShared.crypto_aes import encrypt,gen_iv
+from ..PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
+from ..PakketShared.compression import deflate
+from ..PakketShared.pp4time import get_POSIX_timestamp
+from .exceptions import *
 
 class Creator:
 

@@ -1,5 +1,5 @@
 
-import PyPakket4.PakketExtract.extractor
-import PyPakket4.PakketExtract.exceptions
+from . import extractor
+from . import exceptions
 
 __all__ = ["extractor","exceptions"]

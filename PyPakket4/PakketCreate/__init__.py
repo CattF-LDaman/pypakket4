@@ -1,5 +1,5 @@
 
-import PyPakket4.PakketCreate.creator
-import PyPakket4.PakketCreate.exceptions
+from . import creator
+from . import exceptions
 
 __all__ = ['creator','exceptions']

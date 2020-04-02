@@ -8,12 +8,12 @@ import pprint
 import msgpack
 from tempfile import gettempdir
 
-from PyPakket4.PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
-from PyPakket4.PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
-from PyPakket4.PakketShared.compression import inflate
-from PyPakket4.PakketShared.crypto_aes import decrypt
-from PyPakket4.PakketShared.pp4time import from_POSIX_timestamp
-from PyPakket4.PakketExtract.exceptions import *
+from ..PakketShared.logger import Logger,INFO,WARNING,ERROR,DEBUG
+from ..PakketShared.constants import MAGIC_NUM,MAGIC_NUM_LEN,VERSION
+from ..PakketShared.compression import inflate
+from ..PakketShared.crypto_aes import decrypt
+from ..PakketShared.pp4time import from_POSIX_timestamp
+from ..PakketExtract.exceptions import *
 
 class Extractor:
 
