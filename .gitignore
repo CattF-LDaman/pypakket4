@@ -3,6 +3,7 @@
 
 *.pyp4
 TestDir_extract/
+header_extractor.py
 
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python
