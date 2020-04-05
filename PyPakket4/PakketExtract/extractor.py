@@ -225,8 +225,7 @@ class Extractor:
                 f.write("Created on: {}\n".format(self.creation_time_as_str))
                 f.write("Metadata: ")
                 pprint.pprint(self.metadata,f)
-                f.write('\n')
-                f.write("\n\n-- END OF FILE --")
+                f.write("\n-- END OF FILE --")
             self.logger.log("Metadata file created.")
 
         self.logger.log("Done.")

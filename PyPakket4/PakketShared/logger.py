@@ -53,6 +53,8 @@ class Logger:
 
     def close(self):
 
+        self.log("Closing logger.")
+
         if not self.log_file.closed:
             self.log_file.close()
 
