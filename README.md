@@ -19,7 +19,7 @@ I created it with certain things in mind including:
  AES Encryption using pycryptodome
   - Random IV per package, included in file header
   - AES CFB
-  - Creator class receives string as input which then gets hashed (blake2b, digest_size = 16)
+  - Crypto functions receive string as input which then gets hashed and used as key (blake2b, digest_size = 16)
  
  Compression (DEFLATE, INFLATE) using zlib
  
