@@ -29,6 +29,7 @@ class Extractor:
         :param stealth: If true, logs don't get printed or saved to a file, no log file is created.
         :param logger_cleanup: Whether to delete logfile when logger.close method is called
         :param skip_version_check: Skip checking 16-bit version end included in file header, if set to False, Extractor raises PyPakket4.PakketExtract.exceptions.VersionMismatchError
+
         """
 
         self.closed = False
@@ -156,7 +157,8 @@ class Extractor:
         :param skip_hash_check: Whether to skip checking hash found in file header and hash of extracted file
         :param hash_match_required: Whether to raise error if hash check fails (see skip_hash_check)
         :param add_metadata_file: Whether to add file containing metadata
-        :return: None
+
+        :returns: Metadata, can also be accessed at Extractor.metadata
         """
 
         if self.closed:
@@ -232,6 +234,8 @@ Extracted on: {}
             self.logger.log("Metadata file created.")
 
         self.logger.log("Done.")
+
+        return self.metadata
 
     def close(self):
 
