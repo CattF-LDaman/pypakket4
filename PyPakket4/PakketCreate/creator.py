@@ -108,8 +108,6 @@ class Creator:
 
             self.IV = gen_iv()
 
-            #rel_index_start = original_start = f.tell()
-
             for filen,file in enumerate(self.target_dir_contents['files']):
 
                 self.target_dir_contents['files'][filen]['base_offset_start'] = f.tell()
@@ -148,16 +146,9 @@ class Creator:
                     self.target_dir_contents['files'][filen]['compressed_size'] = ts
                     self.target_dir_contents['files'][filen]['hash'] = h.digest()
 
-                    #print(self.target_dir_contents['files'][filen]['chunks'], len(self.target_dir_contents['files'][filen]['chunks']))
-
                 self.logger.log("<< {}/{} - {}% >> File ' {} ' has been written to package file".format(filen+1,len(self.target_dir_contents['files']),int((filen+1)/len(self.target_dir_contents['files'])*100),file['name']))
 
                 f.write(h.digest())
-
-                #print(original_start+file['base_offset_start'])
-                #print(rel_index_start,rel_index_start+file['size']+32 , f.tell())
-
-                #rel_index_start += (file['size']+32)
 
             header_offset = f.tell()
 
@@ -176,7 +167,7 @@ class Creator:
             f.write(encrypt(self.package_name.encode('utf-8'),encryption_key,self.IV))
 
             mdata = msgpack.dumps(metadata)
-            f.write(encrypt(len(mdata).to_bytes(4, 'little'),encryption_key,self.IV))  # max mdata len (theoretical) == 2**32-1
+            f.write(encrypt(len(mdata).to_bytes(4, 'little'),encryption_key,self.IV))
             f.write(encrypt(mdata,encryption_key,self.IV))
 
             self.logger.log("Metadata has been written to package file")
@@ -196,8 +187,6 @@ class Creator:
 
             f.write(encrypt(len(self.target_dir_contents['files']).to_bytes(6, 'little'),encryption_key,self.IV))
 
-            # {"name":str,"size":int,"rel_path":str,"dir_id":int"last_mod_time":int, "base_offset_start": int}
-
             for file in self.target_dir_contents['files']:
                 file_entry = b""
                 file_entry += encrypt(len(file['name']).to_bytes(1, "little"),encryption_key,self.IV)
@@ -212,11 +201,6 @@ class Creator:
 
                 file_entry += encrypt(file['compressed_size'].to_bytes(8, 'little'),encryption_key,self.IV)  # 64-BIT
                 self.logger.log("File compressed size of file ' {} ' added to file entry".format(file['name']), DEBUG)
-
-                #file_entry += encrypt(len(file['rel_path']).to_bytes(4, "little"),encryption_key,self.IV)
-                #self.logger.log("Relative path length of file ' {} ' added to file entry".format(file['name']),DEBUG)
-                #file_entry += encrypt(file['rel_path'].encode('utf-8'),encryption_key,self.IV)
-                #self.logger.log("Relative path of file ' {} ' added to file entry".format(file['name']), DEBUG)
 
                 file_entry += encrypt(file['dir_id'].to_bytes(4, "little"),encryption_key,self.IV)
                 self.logger.log("Directory id of file ' {} ' added to file entry".format(file['name']), DEBUG)
