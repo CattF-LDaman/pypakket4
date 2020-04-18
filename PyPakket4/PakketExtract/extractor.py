@@ -164,7 +164,7 @@ class Extractor:
         if self.closed:
             raise ExtractorClosedError("Can't extract with closed Extractor object")
 
-        self.logger.log("Extracting {}.".format(self.target_package))
+        self.logger.log("Extracting {}".format(self.target_package))
 
         if not os.path.isdir(output_dir):
 
