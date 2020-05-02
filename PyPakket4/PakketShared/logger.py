@@ -53,11 +53,13 @@ class Logger:
 
     def close(self):
 
-        self.log("Closing logger.")
+        if self._stealth:
 
-        if not self.log_file.closed:
-            self.log_file.close()
+            self.log("Closing logger.")
 
-        if self._cleanup:
+            if not self.log_file.closed:
+                self.log_file.close()
 
-            remove(self.filepath)
+            if self._cleanup:
+
+                remove(self.filepath)
