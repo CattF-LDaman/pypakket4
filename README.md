@@ -1,3 +1,5 @@
+#DO NOT USE, MAJOR SECURITY FLAWS
+
 # PyPakket4
 **Archive file format in Python 3**
 
@@ -56,9 +58,7 @@ px.close()
 
  
  # TO-DO
- - Interface for easier and more rugged extraction and creation
- - GUI?
- - Better TO-DO list (:
+/
  
  # License
  MIT License
